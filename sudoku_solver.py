@@ -6,20 +6,26 @@ Final Project: Sudoku Solver
 Description of Problem: program that takes an input file which is an unsolved sudoku puzzle and returns a solve puzzle
 using backtracking algorithm.
 """
+
 import copy
 import sys
 
 
 class SudokuSolver:
     def __init__(self, puzzle):
-        # Validate puzzle format upon initialization
+        """
+        Validate puzzle format upon initialization
+        """
         if not isinstance(puzzle, list) or len(puzzle) != 9 or any(len(row) != 9 for row in puzzle):
             raise ValueError("Invalid puzzle format. Please provide a 9x9 list of lists.")
         self.puzzle = puzzle
         self.solution = None
 
-    # Check if 'num' is a valid choice for the given cell
     def is_valid(self, row, col, num):
+        """
+        Returns the numbers are valid in the grid
+        """
+        # Check if 'num' is a valid choice for the given cell
         for i in range(9):
             if self.puzzle[row][i] == num or self.puzzle[i][col] == num:
                 return False
@@ -35,6 +41,9 @@ class SudokuSolver:
 
     # Function to solve the Sudoku puzzle using backtracking
     def solve(self):
+        """
+        Returns true when the puzzle is solved and save the solution in the solution attribute
+        """
         for row in range(9):
             for col in range(9):
                 if self.puzzle[row][col] == 0:
@@ -48,13 +57,16 @@ class SudokuSolver:
         self.solution = [row[:] for row in self.puzzle]
         return True
 
-    # Representation method to display the solved Sudoku grid
     def __repr__(self):
+        """
+        Representation method to display the solved Sudoku grid
+        """
         result = ""
         result += "\nSolved Sudoku Puzzle:\n"
         if self.solution:
             for i, row in enumerate(self.solution):
-                result += " ".join(map(str, row[:3])) + " | " + " ".join(map(str, row[3:6])) + " | " + " ".join(map(str, row[6:])) + "\n"
+                result += " ".join(map(str, row[:3])) + " | " + " ".join(map(str, row[3:6])) + " | " + " ".join(
+                    map(str, row[6:])) + "\n"
                 if i == 2 or i == 5:
                     result += "------+-------+------\n"
         else:
@@ -62,9 +74,12 @@ class SudokuSolver:
         return result
 
 
-# Read Sudoku puzzle from a file
 def read_sudoku_from_file(file_path):
+    """
+    Reads form the input file and returns the puzzle without the grid lines
+    """
     puzzle = []
+    # Read Sudoku puzzle from a file
     with open(file_path, 'r') as file:
         for line in file:
             # Extract digits from the line using a regular expression, replace '.' with 0
@@ -79,8 +94,10 @@ def read_sudoku_from_file(file_path):
     return puzzle
 
 
-# Main function to read Sudoku puzzles from files and solve them
 def main():
+    """
+    Main function to read Sudoku puzzles from files and solve them
+    """
     input_files = sys.argv[1:]
     if not input_files:
         print("Please provide input file paths as command line arguments.")
@@ -94,7 +111,8 @@ def main():
             sudoku_solver.solve()
             print(f"\nInitial Sudoku Puzzle for {input_file}:\n")
             for i, row in enumerate(initial_puzzle):
-                print(" ".join(map(str, row[:3])) + " | " + " ".join(map(str, row[3:6])) + " | " + " ".join(map(str, row[6:])))
+                print(" ".join(map(str, row[:3])) + " | " + " ".join(map(str, row[3:6])) + " | " + " ".join(
+                    map(str, row[6:])))
                 if i == 2 or i == 5:
                     print("------+-------+------")
             print(sudoku_solver)

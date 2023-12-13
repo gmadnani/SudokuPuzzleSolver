@@ -97,7 +97,7 @@ class TestSudokuSolver(unittest.TestCase):
             test_file.write("0 0 0 4 1 9 0 0 5\n")
             test_file.write("0 0 0 0 8 0 0 7 9\n")
         with self.assertRaises(ValueError):
-            read_sudoku_from_file(test_file_path)
+            SudokuSolver(test_file_path)
 
     def test_read_sudoku_from_file_missing_values(self):
         test_file_path = "test_sudoku_missing_values.txt"
@@ -112,7 +112,7 @@ class TestSudokuSolver(unittest.TestCase):
             test_file.write("0 0 0 4 1 9 0 0 5\n")
             test_file.write("0 0 0 0 8 0 0 7 9\n")
         with self.assertRaises(ValueError):
-            read_sudoku_from_file(test_file_path)
+            SudokuSolver(test_file_path)
 
     def test_read_sudoku_from_file_nonexistent_file(self):
         with self.assertRaises(FileNotFoundError):
